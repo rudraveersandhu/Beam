@@ -95,8 +95,8 @@ class _CancerCareState extends State<CancerCare> {
                       Stack(
                         children: [
                           Center(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width - 150,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width - 50,
                               child: CarouselSlider(
                                   items: getItems(),
                                   options: CarouselOptions(
@@ -120,7 +120,7 @@ class _CancerCareState extends State<CancerCare> {
                           ),
                           Center(
                             child: Container(
-                              width: MediaQuery.of(context).size.width - 150,
+                              width: MediaQuery.of(context).size.width - 50,
                               height: 170,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
@@ -293,7 +293,7 @@ class _CancerCareState extends State<CancerCare> {
                         children: [
                           Center(
                             child: Container(
-                              width: MediaQuery.of(context).size.width - 150,
+                              width: MediaQuery.of(context).size.width - 50,
                               child: CarouselSlider(
                                   items: getItems(),
                                   options: CarouselOptions(
@@ -317,7 +317,7 @@ class _CancerCareState extends State<CancerCare> {
                           ),
                           Center(
                             child: Container(
-                              width: MediaQuery.of(context).size.width - 150,
+                              width: MediaQuery.of(context).size.width - 50,
                               height: 170,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),

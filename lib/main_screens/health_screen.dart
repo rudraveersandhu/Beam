@@ -13,7 +13,46 @@ class HealthScreen extends StatefulWidget {
   State<HealthScreen> createState() => _HealthScreenState();
 }
 
-class _HealthScreenState extends State<HealthScreen> {
+class _HealthScreenState extends State<HealthScreen> with TickerProviderStateMixin{
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+
+    _loadHydraValue();
+  }
+
+  Future<void> _loadHydraValue() async {
+    final value = await getHydra();
+    _controller.animateTo(value);
+  }
+
+  Future<double> getHydra() async {
+    final box = await Hive.openBox('Hydration');
+    var water = await box.get('water') ?? 0.0;
+
+    if (water is double) {
+      return water;
+    } else {
+      throw Exception('Expected a double value for water');
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;
@@ -387,18 +426,24 @@ class _HealthScreenState extends State<HealthScreen> {
                                       ),
                                       Stack(
                                         children: [
-                                          const Column(
+                                           Column(
                                             children: [
                                               Padding(
                                                 padding: EdgeInsets.only(right: 40,top: 20),
-                                                child: SimpleCircularProgressBar(
-                                                  animationDuration: 1,
-                                                  maxValue: 100,
-                                                  progressColors: [
-                                                    Colors.blue,
-                                                    Colors.blueAccent
-                                                  ],
-                                                  backColor: Colors.blueGrey,
+                                                child: AnimatedBuilder(
+                                                  animation: _animation,
+                                                  builder: (context, child) {
+                                                    return SizedBox(
+                                                      height: 100,
+                                                      width: 100,
+                                                      child: CircularProgressIndicator(
+                                                        value: _animation.value,
+                                                        backgroundColor: Colors.grey.shade200,
+                                                        valueColor: _controller.drive(ColorTween(begin: Colors.grey.shade200, end: Colors.blue)),
+                                                        strokeWidth: 15.0,
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               ),
                                             ],
@@ -621,15 +666,6 @@ class _HealthScreenState extends State<HealthScreen> {
     return med;
   }
 
-  Future<double> getHydra() async {
-    final box = await Hive.openBox('Hydration');
-    var water = await box.get('water') ?? 0.0;
 
-    if (water is double) {
-      return water;
-    } else {
-      throw Exception('Expected a double value for water');
-    }
-  }
 
 }

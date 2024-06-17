@@ -384,7 +384,7 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
         body: Center(
           child: Stack(
             children: [
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: screen_width,
                 child: Image.asset('assets/signinbg.JPG',

@@ -585,7 +585,7 @@ class _BlogsState extends State<Blogs> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Container(
                                               height: 200,
-                                              width: 400,
+                                              width: MediaQuery.of(context).size.width - 100,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.circular(20),
