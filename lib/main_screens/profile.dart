@@ -165,6 +165,7 @@ class _ProfileState extends State<Profile> {
       return Scaffold(
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Center(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -470,9 +471,10 @@ class _ProfileState extends State<Profile> {
       return Scaffold(
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Center(
             child: Container(
-              height: MediaQuery.of(context).size.height,
+              //height: MediaQuery.of(context).size.height,
               color: Colors.white,
               width: screen_width,
               child: Column(
@@ -481,290 +483,293 @@ class _ProfileState extends State<Profile> {
                   SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Profile',
-                                    style: TextStyle(
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.grey.shade800,
-                                    ),
-                                  ),
-                                  SizedBox(height: 2),
-                                  Text(
-                                    'Welcome back ${model.name}!',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Center(
-                                  child: Column(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.pink.shade300,
-                                                  blurRadius: 10.0,
-                                                  spreadRadius: 2.0,
-                                                  offset: Offset(0, 1), // You can change the offset to your preference
-                                                ),
-                                              ],
-                                            ),
-                                            child: CircleAvatar(
-                                              radius: 50,
-                                              backgroundColor: Colors.white,
-                                              child: ClipOval(
-                                                child: CachedNetworkImage(
-                                                  imageUrl: model.profilePicture,
-                                                  placeholder: (context, url) => SizedBox(
-                                                    width: 100,
-                                                    height: 100,
-                                                    child: Center(
-                                                      child: CircularProgressIndicator(color: Colors.pink.shade300),
-                                                    ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Profile',
+                                      style: TextStyle(
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.grey.shade800,
+                                      ),
+                                    ),
+                                    SizedBox(height: 2),
+                                    Text(
+                                      'Welcome back ${model.name}!',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                children: [
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.pink.shade300,
+                                                    blurRadius: 10.0,
+                                                    spreadRadius: 2.0,
+                                                    offset: Offset(0, 1), // You can change the offset to your preference
                                                   ),
-                                                  errorWidget: (context, url, error) => Icon(Icons.error),
-                                                  imageBuilder: (context, imageProvider) => Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.cover,
+                                                ],
+                                              ),
+                                              child: CircleAvatar(
+                                                radius: 50,
+                                                backgroundColor: Colors.white,
+                                                child: ClipOval(
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: model.profilePicture,
+                                                    placeholder: (context, url) => SizedBox(
+                                                      width: 100,
+                                                      height: 100,
+                                                      child: Center(
+                                                        child: CircularProgressIndicator(color: Colors.pink.shade300),
+                                                      ),
+                                                    ),
+                                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                                    imageBuilder: (context, imageProvider) => Container(
+                                                      width: 100,
+                                                      height: 100,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            right: 0,
-                                            bottom: 0,
-                                            child: GestureDetector(
-                                              onTap: uploadProfilePicture,
-                                              child: Icon(
-                                                CupertinoIcons.plus_circle_fill,
-                                                color: Colors.pink.shade600,
-                                                size: 20,
+                                            Positioned(
+                                              right: 0,
+                                              bottom: 0,
+                                              child: GestureDetector(
+                                                onTap: uploadProfilePicture,
+                                                child: Icon(
+                                                  CupertinoIcons.plus_circle_fill,
+                                                  color: Colors.pink.shade600,
+                                                  size: 20,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 8),
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            /*Consumer<UserModel>(
-                                            builder: (context, userProvider, child) {
-                                              return Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  CircleAvatar(
-                                                    backgroundImage: NetworkImage(userProvider.profilePicture),
-                                                    radius: 50,
-                                                  ),
-                                                  SizedBox(height: 20),
-                                                  Text(
-                                                    userProvider.name,
-                                                    style: TextStyle(fontSize: 24),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          ),*/
-                                            Text(
-                                              model.name,
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: (){
-                                                _showEditDialog(_nameController.text);
-                                              },
-                                              child: Icon(
-                                                Icons.edit,
-                                                color: Colors.grey.shade600,
-                                                size: 20,
-                                              ),
-                                            )
                                           ],
-                                        ),),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        'welcome to your beam profile',
-                                        style: TextStyle(
-                                          color: Colors.grey,
                                         ),
-                                      ),
-                                      SizedBox(height: 16),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.pink,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
+                                        SizedBox(height: 8),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              /*Consumer<UserModel>(
+                                              builder: (context, userProvider, child) {
+                                                return Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    CircleAvatar(
+                                                      backgroundImage: NetworkImage(userProvider.profilePicture),
+                                                      radius: 50,
+                                                    ),
+                                                    SizedBox(height: 20),
+                                                    Text(
+                                                      userProvider.name,
+                                                      style: TextStyle(fontSize: 24),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ),*/
+                                              Text(
+                                                model.name,
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 32,
-                                                vertical: 12,
-                                              ),
-                                            ),
-                                            onPressed: () {},
-                                            child: Text(
-                                              'Feedback',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                                              GestureDetector(
+                                                onTap: (){
+                                                  _showEditDialog(_nameController.text);
+                                                },
+                                                child: Icon(
+                                                  Icons.edit,
+                                                  color: Colors.grey.shade600,
+                                                  size: 20,
+                                                ),
+                                              )
+                                            ],
+                                          ),),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          'welcome to your beam profile',
+                                          style: TextStyle(
+                                            color: Colors.grey,
                                           ),
-                                          SizedBox(width: 16),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.grey[300],
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        SizedBox(height: 16),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.pink,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 32,
+                                                  vertical: 12,
+                                                ),
                                               ),
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 32,
-                                                vertical: 12,
+                                              onPressed: () {},
+                                              child: Text(
+                                                'Feedback',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                            onPressed: () {
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
-                                            },
-                                            child: Text(
-                                              'Settings',
-                                              style: TextStyle(
-                                                color: Colors.grey[600],
+                                            SizedBox(width: 16),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.grey[300],
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 32,
+                                                  vertical: 12,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+                                              },
+                                              child: Text(
+                                                'Settings',
+                                                style: TextStyle(
+                                                  color: Colors.grey[600],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 32),
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Send a Review or feedback',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 32),
-                                const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Send a Review or feedback',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ),
-                                SizedBox(height: 8),
-                                TextField(
-                                  onChanged: (value) {
-                                    mail_subject = value;
-                                  },
-                                  maxLines: 1,
-                                  decoration: InputDecoration(
-                                    hintText: 'Subject',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                  SizedBox(height: 8),
+                                  TextField(
+                                    onChanged: (value) {
+                                      mail_subject = value;
+                                    },
+                                    maxLines: 1,
+                                    decoration: InputDecoration(
+                                      hintText: 'Subject',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(height: 8),
-                                TextField(
-                                  onChanged: (value) {
-                                    mail_body = value;
-                                  },
-                                  maxLines: 4,
-                                  decoration: InputDecoration(
-                                    hintText: 'Share your thoughts',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                  SizedBox(height: 8),
+                                  TextField(
+                                    onChanged: (value) {
+                                      mail_body = value;
+                                    },
+                                    maxLines: 4,
+                                    decoration: InputDecoration(
+                                      hintText: 'Share your thoughts',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(height: 16),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.pink,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                  SizedBox(height: 16),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.pink,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 32,
+                                        vertical: 12,
+                                      ),
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 32,
-                                      vertical: 12,
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    //sendMail(mail_subject, mail_body, 'rudraveersandhu@gmail.com');
-                                    showAlert();
-                                  },
-                                  child: Text(
-                                    'Send Feedback',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 16),
-                                model.email == 'rudraveersandhu@gmail.com' || model.email == 'ameyaaneja1@gmail.com' ? ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.pink,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 32,
-                                      vertical: 12,
+                                    onPressed: () async {
+                                      //sendMail(mail_subject, mail_body, 'rudraveersandhu@gmail.com');
+                                      showAlert();
+                                    },
+                                    child: Text(
+                                      'Send Feedback',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                  onPressed: () async {
-                                    Navigator.push(context, MaterialPageRoute(builder: (builder) => const CounterScreen() ));
-
-                                  },
-                                  child: Text(
-                                    "View Visitor's count",
-                                    style: TextStyle(
-                                      color: Colors.white,
+                                  SizedBox(height: 16),
+                                  model.email == 'rudraveersandhu@gmail.com' || model.email == 'ameyaaneja1@gmail.com' ? ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.pink,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 32,
+                                        vertical: 12,
+                                      ),
                                     ),
-                                  ),
-                                ) : Container()
-                              ],
+                                    onPressed: () async {
+                                      Navigator.push(context, MaterialPageRoute(builder: (builder) => const CounterScreen() ));
+                        
+                                    },
+                                    child: Text(
+                                      "View Visitor's count",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ) : Container()
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
+                  Container(height: 200,)
                 ],
               ),
             ),

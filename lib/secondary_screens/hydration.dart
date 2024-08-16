@@ -312,7 +312,7 @@ class _HydrationState extends State<Hydration> {
                                     ],
                                   ),
                                   child: Center(
-                                    child: Text('Compleate you daily water target'
+                                    child: Text('Complete you daily water target'
                                         '!',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
@@ -643,7 +643,7 @@ class _HydrationState extends State<Hydration> {
                                       ],
                                     ),
                                     child: Center(
-                                      child: Text('Compleate you daily water target'
+                                      child: Text('Complete you daily water target'
                                           '!',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -708,5 +708,6 @@ class _HydrationState extends State<Hydration> {
     var water = await box.get('water') ?? double;
     water = x;
     await box.put('water', water);
+    await box.put('lastUpdateDate', DateTime.now());
   }
 }

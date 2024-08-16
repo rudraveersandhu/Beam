@@ -87,6 +87,7 @@ class _NewBlogState extends State<NewBlog> {
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;
+    double screen_height = MediaQuery.of(context).size.height;
     if(screen_width > 500){
       screen_width = 500;
       return Scaffold(
@@ -98,6 +99,7 @@ class _NewBlogState extends State<NewBlog> {
             child: Container(
               color: Colors.white,
               width: screen_width,
+              height: screen_height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -229,23 +231,7 @@ class _NewBlogState extends State<NewBlog> {
                                   ),
                                   GestureDetector(
                                     onTap: (){
-                                      if( _titleController.text != '' && _contentController.text != ''){
-                                        publishBlog(
-                                            title: _titleController.text,
-                                            content: _contentController.text,
-                                            authorName: _authorNameController.text,
-                                            authorPhotoUrl: _authorPhotoUrlController.text
-                                        );
-                                      } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            content: Text('Enter all the requires feilds'),
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        );
-                                      }
-
-
+                                      publish_blog();
                                     },
                                     child: Container(
                                       height: 50,
@@ -301,6 +287,7 @@ class _NewBlogState extends State<NewBlog> {
             child: Container(
               color: Colors.white,
               width: screen_width,
+              height: screen_height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -432,21 +419,7 @@ class _NewBlogState extends State<NewBlog> {
                                   ),
                                   GestureDetector(
                                     onTap: (){
-                                      if( _titleController.text != '' && _contentController.text != ''){
-                                        publishBlog(
-                                            title: _titleController.text,
-                                            content: _contentController.text,
-                                            authorName: _authorNameController.text,
-                                            authorPhotoUrl: _authorPhotoUrlController.text
-                                        );
-                                      } else {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            content: Text('Enter all the requires feilds'),
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        );
-                                      }
+                                      publish_blog();
 
 
                                     },
@@ -498,23 +471,47 @@ class _NewBlogState extends State<NewBlog> {
 
 
   }
+
+  publish_blog(){
+    try{
+      if( _titleController.text != '' && _contentController.text != '' && _authorNameController.text != ''){
+        publishBlog(
+            title: _titleController.text,
+            content: _contentController.text,
+            authorName: _authorNameController.text,
+            authorPhotoUrl: _authorPhotoUrlController.text
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Enter all the requires feilds'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }catch(e){
+      print("Error: $e");
+    }
+
+  }
+
   addBlog(String title, String content, String author, DateTime date) async {
     final box = await Hive.openBox('Blogs');
 
     var blog_titles = await box.get('blog_titles') ?? <String>[];
     var blog_content = await box.get('blog_content') ?? <String>[];
     var blog_author = await box.get('blog_author') ?? <String>[];
-    var blog_date = await box.get('blog_date') ?? <DateTime>[];
+    //var blog_date = await box.get('blog_date') ?? <DateTime>[];
 
     blog_titles.add(title);
     blog_content.add(content);
     blog_author.add(author);
-    blog_date.add(date);
+    //blog_date.add(date);
 
     await box.put('blog_titles', blog_titles);
     await box.put('blog_content', blog_content);
     await box.put('blog_author', blog_author);
-    await box.put('blog_date', blog_date);
+    //await box.put('blog_date', blog_date);
 
     Navigator.pop(context);
   }

@@ -31,6 +31,7 @@ class _HealthScreenState extends State<HealthScreen> with TickerProviderStateMix
   }
 
   Future<void> _loadHydraValue() async {
+    await _resetHydrationIfNextDay();
     final value = await getHydra();
     _controller.animateTo(value);
   }
@@ -44,6 +45,23 @@ class _HealthScreenState extends State<HealthScreen> with TickerProviderStateMix
     } else {
       throw Exception('Expected a double value for water');
     }
+  }
+
+  Future<void> _resetHydrationIfNextDay() async {
+    final box = await Hive.openBox('Hydration');
+    final lastUpdateDate = box.get('lastUpdateDate') as DateTime?;
+    final currentDate = DateTime.now();
+
+    if (lastUpdateDate == null || !_isSameDay(lastUpdateDate, currentDate)) {
+      await box.put('water', 0.0);
+      await box.put('lastUpdateDate', currentDate);
+    }
+  }
+
+  bool _isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   @override
@@ -285,7 +303,7 @@ class _HealthScreenState extends State<HealthScreen> with TickerProviderStateMix
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Medication and \nSymptoms",
+                                          Text("Medications",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20,
@@ -563,7 +581,7 @@ class _HealthScreenState extends State<HealthScreen> with TickerProviderStateMix
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Medication and \nSymptoms",
+                                          Text("Medications",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 20,
@@ -665,7 +683,5 @@ class _HealthScreenState extends State<HealthScreen> with TickerProviderStateMix
 
     return med;
   }
-
-
 
 }

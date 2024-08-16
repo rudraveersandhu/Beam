@@ -34,7 +34,8 @@ Future<void> main() async {
   );
 
   await Hive.initFlutter();
-  runApp(ChangeNotifierProvider(
+  runApp(
+    ChangeNotifierProvider(
     create: (context) => UserModel(),
     child: MyApp(),
   ),);

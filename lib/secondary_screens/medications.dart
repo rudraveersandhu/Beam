@@ -62,7 +62,7 @@ class _MedicationState extends State<Medication> {
                                 ),
                               ),
                             ),
-                            Text("Medications and \n     Symptoms",
+                            Text("Medications",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 23,
@@ -291,7 +291,7 @@ class _MedicationState extends State<Medication> {
                                 ),
                               ),
                             ),
-                            Text("Medications and \n     Symptoms",
+                            Text("Medications",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 23,

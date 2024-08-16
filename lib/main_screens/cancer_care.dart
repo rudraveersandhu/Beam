@@ -1,10 +1,14 @@
 import 'package:beam/auth_screens/start_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_neat_and_clean_calendar/neat_and_clean_calendar_event.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user_model.dart';
+import '../secondary_screens/chemotherapy.dart';
 import '../utility_screens/my_blogs.dart';
 
 class CancerCare extends StatefulWidget {
@@ -133,7 +137,7 @@ class _CancerCareState extends State<CancerCare> {
                       SizedBox(height: 24),
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0,bottom: 5),
-                        child: Text('Chemotherapy Session',
+                        child: Text('Chemotherapy Sessions',
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w800,
@@ -143,26 +147,39 @@ class _CancerCareState extends State<CancerCare> {
                       ),
                       SizedBox(height: 16),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 100),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: List.generate(5, (index) {
-                            return Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: index == 4 ? Colors.pink.shade300 : Colors.red.shade100,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '${12 + index}',
-                                  style: TextStyle(color: index == 4 ? Colors.white : Colors.pinkAccent),
+                          padding: const EdgeInsets.symmetric(horizontal: 100),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () async {
+                                List<NeatCleanCalendarEvent> x = await getEvents();
+                                List<ChemoData> planned_chem = await getChemo();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>  Chemotherapy(events: x,chemo: planned_chem)),
+                                );
+
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.pink.shade500,
+                                ),
+                                width: screen_width - 100,
+                                height: 40,
+
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(CupertinoIcons.add_circled,color: Colors.white,),
+                                    SizedBox(width: 5,),
+                                    Text("Add Chemo Sessions",style: TextStyle(
+                                        color: Colors.white
+                                    ),),
+                                  ],
                                 ),
                               ),
-                            );
-                          }),
-                        ),
+                            ),
+                          )
                       ),
                       SizedBox(height: 30),
                       Center(
@@ -330,7 +347,7 @@ class _CancerCareState extends State<CancerCare> {
                       SizedBox(height: 24),
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0,bottom: 5),
-                        child: Text('Chemotherapy Session',
+                        child: Text('Chemotherapy Sessions',
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w800,
@@ -341,25 +358,38 @@ class _CancerCareState extends State<CancerCare> {
                       SizedBox(height: 16),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 100),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: List.generate(5, (index) {
-                            return Container(
-                              width: 40,
-                              height: 40,
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () async {
+                              List<NeatCleanCalendarEvent> x = await getEvents();
+                              List<ChemoData> planned_chem = await getChemo();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>  Chemotherapy(events: x,chemo: planned_chem)),
+                              );
+
+                            },
+                            child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: index == 4 ? Colors.pink.shade300 : Colors.red.shade100,
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.pink.shade500,
                               ),
-                              child: Center(
-                                child: Text(
-                                  '${12 + index}',
-                                  style: TextStyle(color: index == 4 ? Colors.white : Colors.pinkAccent),
-                                ),
+                              width: screen_width - 100,
+                              height: 40,
+
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(CupertinoIcons.add_circled,color: Colors.white,),
+                                  SizedBox(width: 5,),
+                                  Text("Add Chemo Sessions",style: TextStyle(
+                                    color: Colors.white
+                                  ),),
+                                ],
                               ),
-                            );
-                          }),
-                        ),
+                            ),
+                          ),
+                        )
                       ),
                       SizedBox(height: 30),
                       Center(
@@ -497,5 +527,43 @@ class _CancerCareState extends State<CancerCare> {
       ),
     ];
     return items;
+  }
+
+  getEvents() async {
+    final box = await Hive.openBox('Events');
+    var des = await box.get('des') ?? <String>[];
+    var start = await box.get('start') ?? <DateTime>[];
+    var end = await box.get('end') ?? <DateTime>[];
+
+    List<NeatCleanCalendarEvent> events = [];
+
+    for(int x = 0; x < des.length ; x++){
+
+      events.add(
+          NeatCleanCalendarEvent(
+            'Chemo',
+            description: des[x],
+            startTime: start[x],
+            endTime: end[x],
+            color: Colors.green,
+          ));
+    }
+    return events;
+  }
+
+  getChemo() async {
+    final box = await Hive.openBox('Events');
+    var des = await box.get('des') ?? <String>[];
+    var start = await box.get('start') ?? <DateTime>[];
+    var end = await box.get('end') ?? <DateTime>[];
+
+    List<ChemoData> planned_chemo = [];
+
+
+    for(int x = 0; x < des.length ; x++){
+      planned_chemo.add(ChemoData(start[x]!, 1));
+    }
+    return planned_chemo;
+
   }
 }
