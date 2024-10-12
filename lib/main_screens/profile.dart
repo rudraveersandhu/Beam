@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:beam/models/user_model.dart';
-import 'package:beam/auth_screens/start_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:html' as html;
@@ -11,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:sendgrid_mailer/sendgrid_mailer.dart';
 import '../utility_screens/counterScreen.dart';
 import '../utility_screens/settings.dart';
 

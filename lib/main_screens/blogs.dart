@@ -1,9 +1,6 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../utility_screens/new_blog.dart';
 import '../utility_screens/readblog.dart';
 
 class Blogs extends StatefulWidget {

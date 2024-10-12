@@ -1,15 +1,13 @@
-import 'package:beam/auth_screens/start_screen.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neat_and_clean_calendar/neat_and_clean_calendar_event.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-
 import '../models/user_model.dart';
 import '../secondary_screens/chemotherapy.dart';
 import '../utility_screens/my_blogs.dart';
+import 'package:carousel_slider/carousel_slider.dart' ;
 
 class CancerCare extends StatefulWidget {
 
